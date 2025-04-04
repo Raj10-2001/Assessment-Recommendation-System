@@ -1,0 +1,7 @@
+Flask
+pandas
+scikit-learn
+spacy
+beautifulsoup4
+requests
+joblib

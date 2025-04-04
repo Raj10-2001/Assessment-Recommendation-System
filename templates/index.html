@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SHL Assessment Recommendation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h2>Enter Job Description</h2>
+    <form method="POST">
+        <textarea name="job_desc" rows="4" cols="50" required></textarea><br>
+        <button type="submit">Get Recommendations</button>
+    </form>
+
+    {% if recommendations %}
+        <h3>Recommended Assessments:</h3>
+        <table border="1">
+            <tr>
+                <th>Assesment Name</th>
+                <th>URL</th>
+                <th>Remote Support</th>
+                <th>Adaptive/IRT</th>
+                <th>Duration</th>
+                <th>Test Type</th>
+            </tr>
+            {% for rec in recommendations %}
+                <tr>
+                    <td>{{ rec["Assessment Name"] }}</td>
+                    <td><a href="{{ rec['URL'] }}" target="_blank">Link</a></td>
+                    <td>{{ rec["Remote Testing Support"] }}</td>
+                    <td>{{ rec["Adaptive/IRT Support"] }}</td>
+                    <td>{{ rec["Duration"] }}</td>
+                    <td>{{ rec["Test Type"] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
