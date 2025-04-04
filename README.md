@@ -20,13 +20,18 @@ This project is a smart recommendation engine that helps hiring managers find th
 ###  Example Inputs & Outputs  
 
  *Job Description Input 1*
- ![image](https://github.com/user-attachments/assets/db883ef7-1348-45b3-b832-05534354355c)
+![image](https://github.com/user-attachments/assets/6718f8ac-a7ee-4f19-a81b-a99c97657782)
+
  *Recommended Assessment List 1*  
-![image](https://github.com/user-attachments/assets/b24e619a-c37e-4060-bcb7-81849f729ff6)
+![image](https://github.com/user-attachments/assets/ef530903-0f3b-4f9f-85a0-3a814fe6fc3a)
+
  *Job Description Input 2*  
- ![image](https://github.com/user-attachments/assets/30e4a317-25cb-44a4-b88c-f6c3b62ce3ce)
+![image](https://github.com/user-attachments/assets/7bb1b149-6ced-41fc-9ed7-a7e3298ccd16)
+
  *Recommended Assessment List 2*  
-![image](https://github.com/user-attachments/assets/f5e9e380-faaf-4038-9c3a-6ac983251cf4)
+
+![image](https://github.com/user-attachments/assets/46f58f11-0535-442c-997a-314beb470770)
+
 ---
 
 ##  Tech Stack  
