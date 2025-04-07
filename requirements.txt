@@ -5,3 +5,4 @@ spacy
 beautifulsoup4
 requests
 joblib
+gunicorn
