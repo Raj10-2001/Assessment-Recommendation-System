@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import pandas as pd
 from utils.preprocess import extract_keywords
-from utils.recommendation import recommend_assessments
+from utils.recommend import recommend_assessments
 
 app = Flask(__name__)
 
