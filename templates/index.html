@@ -2,37 +2,33 @@
 <html>
 <head>
     <title>SHL Assessment Recommendation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <h2>Enter Job Description</h2>
-    <form method="POST">
-        <textarea name="job_desc" rows="4" cols="50" required></textarea><br>
-        <button type="submit">Get Recommendations</button>
-    </form>
+    <textarea id="job_desc" rows="6" cols="70" required></textarea><br>
+    <button onclick="getRecommendations()">Get Recommendations</button>
 
-    {% if recommendations %}
-        <h3>Recommended Assessments:</h3>
-        <table border="1">
-            <tr>
-                <th>Assesment Name</th>
-                <th>URL</th>
-                <th>Remote Support</th>
-                <th>Adaptive/IRT</th>
-                <th>Duration</th>
-                <th>Test Type</th>
-            </tr>
-            {% for rec in recommendations %}
-                <tr>
-                    <td>{{ rec["Assessment Name"] }}</td>
-                    <td><a href="{{ rec['URL'] }}" target="_blank">Link</a></td>
-                    <td>{{ rec["Remote Testing Support"] }}</td>
-                    <td>{{ rec["Adaptive/IRT Support"] }}</td>
-                    <td>{{ rec["Duration"] }}</td>
-                    <td>{{ rec["Test Type"] }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    {% endif %}
+    <pre id="output" style="margin-top:20px; border:1px solid #ccc; padding:10px;"></pre>
+
+    <script>
+        function getRecommendations() {
+            const jobDesc = document.getElementById("job_desc").value;
+
+            fetch("/recommend", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ query: jobDesc })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById("output").textContent = "Error: " + error;
+            });
+        }
+    </script>
 </body>
 </html>

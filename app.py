@@ -6,14 +6,9 @@ from utils.recommend import recommend_assessments
 app = Flask(__name__)
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def index():
-    recommendations = None
-    if request.method == "POST":
-        job_desc = request.form["job_description"]
-        recommendations = recommend_assessments(job_desc)
-        recommendations = recommendations.to_dict(orient="records")
-    return render_template("index.html", recommendations=recommendations)
+    return render_template("index.html")
 
 
 @app.route("/health", methods=["GET"])
@@ -25,15 +20,14 @@ def health():
 def recommend():
     data = request.get_json()
     query = data.get("query")
-    
+
     if not query:
         return jsonify({"error": "Missing 'query' in request"}), 400
 
- 
-    df = recommend_assessments(query).head(10)
+    df = recommend_assessments(query)
 
     formatted = []
-    for _, row in df.iterrows():
+    for row in df:
         formatted.append({
             "url": row.get("url", "https://example.com"),
             "adaptive_support": row.get("adaptive_support", "No"),
