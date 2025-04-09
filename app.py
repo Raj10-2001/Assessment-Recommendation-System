@@ -5,6 +5,7 @@ from utils.recommend import recommend_assessments
 
 app = Flask(__name__)
 
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     recommendations = None
@@ -15,15 +16,34 @@ def index():
     return render_template("index.html", recommendations=recommendations)
 
 
-@app.route("/api/query", methods=["POST"])
-def api_query():
-    data = request.get_json()
-    if not data or "text" not in data:
-        return jsonify({"error": "Missing 'text' in request"}), 400
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "healthy"}), 200
 
-    job_desc = data["text"]
-    recommendations = recommend_assessments(job_desc).to_dict(orient="records")
-    return jsonify({"recommendations": recommendations})
+
+@app.route("/recommend", methods=["POST"])
+def recommend():
+    data = request.get_json()
+    query = data.get("query")
+    
+    if not query:
+        return jsonify({"error": "Missing 'query' in request"}), 400
+
+ 
+    df = recommend_assessments(query).head(10)
+
+    formatted = []
+    for _, row in df.iterrows():
+        formatted.append({
+            "url": row.get("url", "https://example.com"),
+            "adaptive_support": row.get("adaptive_support", "No"),
+            "description": row.get("description", "No description provided."),
+            "duration": int(row.get("duration", 30)),
+            "remote_support": row.get("remote_support", "Yes"),
+            "test_type": row.get("test_type", ["General"])
+        })
+
+    return jsonify({"recommended_assessments": formatted}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
