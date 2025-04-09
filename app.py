@@ -5,22 +5,26 @@ from utils.recommend import recommend_assessments
 
 app = Flask(__name__)
 
-
-@app.route("/", methods=["GET"])
+# ✅ Web form (working)
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    recommendations = None
+    if request.method == "POST":
+        job_desc = request.form["job_desc"]
+        recommendations = recommend_assessments(job_desc)
+    return render_template("index.html", recommendations=recommendations)
 
-
+# ✅ Health check
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "healthy"}), 200
 
-
+# ✅ JSON API (for external calls like Postman)
 @app.route("/recommend", methods=["POST"])
 def recommend():
     data = request.get_json()
     query = data.get("query")
-
+    
     if not query:
         return jsonify({"error": "Missing 'query' in request"}), 400
 
